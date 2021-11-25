@@ -31,3 +31,11 @@ class Snippet(models.Model):
 
     class Meta:
         ordering = ['created']
+
+class Announcement(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=200, blank=True, default='')
+    body = models.TextField()
+    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    published = models.BooleanField(default=False)
