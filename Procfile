@@ -1,1 +1,1 @@
-web: gunicorn diplicity_annoucements.wsgi:application
+web: gunicorn diplicity_announcements.wsgi:application
