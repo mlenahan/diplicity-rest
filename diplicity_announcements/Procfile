@@ -1,1 +1,1 @@
-web: gunicorn announcements.wsgi
+web: gunicorn project.wsgi
