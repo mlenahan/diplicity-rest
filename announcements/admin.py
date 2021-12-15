@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Announcement
+from .models import Announcement, AnnouncementImage
 
 @admin.action(description='Publish selected announcements')
 def publish(model_admin, request, queryset):
@@ -10,10 +10,15 @@ def unpublish(model_admin, request, queryset):
     queryset.update(published=False)
 
 
+class AnnouncementImageInline(admin.TabularInline):
+    model = AnnouncementImage
+    extra = 0
+
 class AnnouncementAdmin(admin.ModelAdmin):
-    fields = ('title', 'subtitle', 'body')
-    list_display = ('title', 'owner', 'created_at', 'published')
+    fields = ('title', 'subtitle', 'body', 'image')
+    list_display = ('title', 'owner', 'created_at', 'published', 'image')
     actions = [publish, unpublish]
+    inlines = [AnnouncementImageInline]
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'owner', None) is None:
@@ -33,3 +38,4 @@ class AnnouncementAdmin(admin.ModelAdmin):
         return True
 
 admin.site.register(Announcement, AnnouncementAdmin)
+

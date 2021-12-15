@@ -8,6 +8,11 @@ class Announcement(models.Model):
     body = models.TextField()
     owner = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True)
     published = models.BooleanField(default=False)
+    image = models.FileField(max_length=254, upload_to='images')
 
     def __str__(self):
         return self.title
+
+class AnnouncementImage(models.Model):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
+    image = models.FileField(max_length=254, upload_to='images')
